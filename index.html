@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pavel Hamerník (autoservis) — Třeboň · Autoservis</title>
+  <meta name="description" content="Pavel Hamerník (autoservis) — Třeboň · Autoservis. Spolehlivé opravy vozidel, profesionální diagnostika a rychlý servis v Třeboni. Zavolejte — termín domluvíme hned." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --slate: #0f172a;
+      --slate-light: #334155;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --cream: #fefce8;
+      --white: #ffffff;
+      --text-muted: #94a3b8;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lexend', sans-serif;
+      background: var(--slate);
+      color: var(--white);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    #hero {
+      position: relative;
+      height: 100vh;
+      max-height: 100vh;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      background-image: url('images/hero.jpg');
+      background-size: cover;
+      background-position: center 30%;
+    }
+
+    #hero::before {
+      content: '';
+      position: absolute;
+      inset: -40% -20%;
+      background: var(--accent);
+      opacity: 0.12;
+      transform: rotate(15deg);
+      transform-origin: center center;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #hero::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.5;
+      z-index: 1;
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards 0.2s;
+    }
+
+    #hero h1 {
+      font-size: clamp(32px, 3.5vw, 52px);
+      font-weight: 800;
+      line-height: 1.1;
+      color: var(--white);
+      letter-spacing: -0.02em;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.4s;
+    }
+
+    #hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      margin-top: 20px;
+      font-size: clamp(15px, 1.4vw, 18px);
+      font-weight: 300;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.6;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.65s;
+    }
+
+    .hero-actions {
+      margin-top: 40px;
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 0.85s;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--white);
+      font-family: 'Lexend', sans-serif;
+      font-size: 15px;
+      font-weight: 600;
+      padding: 14px 28px;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--white);
+      font-family: 'Lexend', sans-serif;
+      font-size: 15px;
+      font-weight: 500;
+      padding: 14px 28px;
+      text-decoration: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(255,255,255,0.04); }
+
+    .hero-stats {
+      position: absolute;
+      bottom: 48px;
+      left: 48px;
+      right: 48px;
+      z-index: 2;
+      display: flex;
+      gap: 40px;
+      opacity: 0;
+      animation: fadeUp 0.7s ease forwards 1.05s;
+    }
+
+    .hero-stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .hero-stat-num {
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .hero-stat-label {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.55s ease, transform 0.55s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal[data-delay="1"] { transition-delay: 0.05s; }
+    .reveal[data-delay="2"] { transition-delay: 0.15s; }
+    .reveal[data-delay="3"] { transition-delay: 0.25s; }
+    .reveal[data-delay="4"] { transition-delay: 0.38s; }
+
+    section { padding: 96px 0; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 48px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 14px;
+    }
+
+    .section-title {
+      font-size: clamp(26px, 2.8vw, 40px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+      color: var(--white);
+    }
+
+    #sluzby {
+      background: #0a1020;
+    }
+
+    .sluzby-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 2px;
+      margin-top: 52px;
+    }
+
+    .sluzba-card {
+      background: var(--slate);
+      padding: 32px 28px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.2s;
+    }
+
+    .sluzba-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      transition: height 0.3s ease;
+    }
+
+    .sluzba-card:hover { background: rgba(255,255,255,0.04); }
+    .sluzba-card:hover::before { height: 100%; }
+
+    .sluzba-icon {
+      font-size: 28px;
+      margin-bottom: 16px;
+      display: block;
+    }
+
+    .sluzba-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 8px;
+    }
+
+    .sluzba-desc {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    #o-nas {
+      background: var(--slate);
+    }
+
+    .onas-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .onas-text p {
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--text-muted);
+      line-height: 1.75;
+      margin-top: 24px;
+    }
+
+    .onas-text p strong {
+      color: var(--white);
+      font-weight: 600;
+    }
+
+    .onas-highlights {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .highlight-item {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+
+    .highlight-num {
+      font-size: 36px;
+      font-weight: 900;
+      color: var(--accent);
+      line-height: 1;
+      min-width: 60px;
+      letter-spacing: -0.04em;
+    }
+
+    .highlight-text strong {
+      display: block;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--white);
+      margin-bottom: 4px;
+    }
+
+    .highlight-text span {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    #kontakt {
+      background: #0a1020;
+    }
+
+    .kontakt-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+      margin-top: 52px;
+    }
+
+    .kontakt-info {
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .kontakt-row {
+      display: flex;
+      gap: 18px;
+      align-items: flex-start;
+    }
+
+    .kontakt-icon-wrap {
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      font-size: 18px;
+    }
+
+    .kontakt-row-label {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .kontakt-row-value {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--white);
+    }
+
+    .kontakt-row-value a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .kontakt-row-value a:hover { color: var(--accent-dark); }
+
+    .kontakt-map {
+      background: var(--slate);
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .kontakt-map iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      filter: grayscale(0.4) contrast(1.05);
+    }
+
+    footer {
+      background: #070d18;
+      padding: 32px 0;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .footer-brand {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.01em;
+    }
+
+    .footer-brand span { color: var(--accent); }
+
+    .footer-copy {
+      font-size: 12px;
+      font-weight: 300;
+      color: var(--text-muted);
+    }
+
+    .whatsapp-float {
+      position: fixed;
+      bottom: 28px;
+      right: 28px;
+      z-index: 999;
+      width: 56px;
+      height: 56px;
+      background: #25D366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+      text-decoration: none;
+    }
+
+    .whatsapp-float:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+    }
+
+    .whatsapp-float svg {
+      width: 28px;
+      height: 28px;
+      fill: #fff;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 18px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.3s, backdrop-filter 0.3s;
+    }
+
+    nav.scrolled {
+      background: rgba(15,23,42,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .nav-logo {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--white);
+      letter-spacing: -0.01em;
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--white); }
+
+    .nav-cta {
+      background: var(--accent);
+      color: var(--white) !important;
+      padding: 8px 18px !important;
+      font-weight: 600 !important;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--accent-dark); color: var(--white) !important; }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .nav-links { display: none; }
+      .hero-inner { padding: 0 24px; }
+      .hero-stats { left: 24px; right: 24px; gap: 24px; bottom: 36px; }
+      .container { padding: 0 24px; }
+      section { padding: 72px 0; }
+      .onas-layout { grid-template-columns: 1fr; gap: 48px; }
+      .kontakt-layout { grid-template-columns: 1fr; gap: 48px; }
+      .sluzby-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 480px) {
+      .sluzby-grid { grid-template-columns: 1fr; }
+      .hero-stats { flex-wrap: wrap; gap: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav id="navbar">
+    <a href="#" class="nav-logo">PAVEL<span>HAMERNÍK</span></a>
+    <ul class="nav-links">
+      <li><a href="#sluzby">Sluzby</a></li>
+      <li><a href="#o-nas">O nas</a></li>
+      <li><a href="#kontakt">Kontakt</a></li>
+      <li><a href="#kontakt" class="nav-cta">Kontakt</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Třeboň · Autoservis</div>
+      <h1>PAVEL HAMERNÍK — <em>autoservis</em> Třeboň</h1>
+      <p class="hero-sub">Spolehlivé opravy vozidel, profesionální diagnostika a rychlý servis v Třeboni. Zavolejte — termín domluvíme hned.</p>
+      <div class="hero-actions">
+        <a href="https://maps.google.com/?q=%C5%BDi%C5%BEkova%2090%2C%20378%2006%20Suchdol%20nad%20Lu%C5%BEnic%C3%AD" class="btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          Zobrazit na mape
+        </a>
+        <a href="#sluzby" class="btn-secondary">Nase sluzby</a>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat-item">
+        <span class="hero-stat-num">10+</span>
+        <span class="hero-stat-label">Recenzi Google</span>
+      </div>
+      <div class="hero-stat-item">
+        <span class="hero-stat-num">Třeboň</span>
+        <span class="hero-stat-label">Lokalita</span>
+      </div>
+      
+    </div>
+  </section>
+
+  <section id="sluzby">
+    <div class="container">
+      <p class="section-label reveal" data-delay="1">Co nabizime</p>
+      <h2 class="section-title reveal" data-delay="2">Kompletni pece<br>o vase vozidlo</h2>
+      <div class="sluzby-grid">
+        
+        <div class="sluzba-card reveal" data-delay="1">
+          <span class="sluzba-icon">🔧</span>
+          <p class="sluzba-name">Opravy vozidel</p>
+          <p class="sluzba-desc">Mechanické opravy osobních i nákladních vozidel všech značek.</p>
+        </div>
+        <div class="sluzba-card reveal" data-delay="2">
+          <span class="sluzba-icon">🔍</span>
+          <p class="sluzba-name">Diagnostika</p>
+          <p class="sluzba-desc">Počítačová diagnostika závad — rychlé a přesné odhalení problému.</p>
+        </div>
+        <div class="sluzba-card reveal" data-delay="3">
+          <span class="sluzba-icon">🛢️</span>
+          <p class="sluzba-name">Výměna olejů</p>
+          <p class="sluzba-desc">Výměna motorového, převodového i diferenciálního oleje.</p>
+        </div>
+        <div class="sluzba-card reveal" data-delay="4">
+          <span class="sluzba-icon">🛑</span>
+          <p class="sluzba-name">Brzdy</p>
+          <p class="sluzba-desc">Kontrola a výměna brzdových kotoučů, destiček a čelistí.</p>
+        </div>
+        <div class="sluzba-card reveal" data-delay="1">
+          <span class="sluzba-icon">🏎️</span>
+          <p class="sluzba-name">Pneumatiky</p>
+          <p class="sluzba-desc">Přezutí, vyvažování a oprava pneumatik.</p>
+        </div>
+        <div class="sluzba-card reveal" data-delay="2">
+          <span class="sluzba-icon">⚡</span>
+          <p class="sluzba-name">Elektroinstalace</p>
+          <p class="sluzba-desc">Opravy elektroinstalace, baterie, alternátory.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="o-nas">
+    <div class="container">
+      <div class="onas-layout">
+        <div class="onas-text">
+          <p class="section-label reveal" data-delay="1">O nas</p>
+          <h2 class="section-title reveal" data-delay="2">PAVEL HAMERNÍK<br>v Třeboni</h2>
+          <p class="reveal" data-delay="3">
+            <strong>Pavel Hamerník (autoservis)</strong> je spolehlivý autoservis v Třeboni. Poskytujeme odborný servis osobních i užitkových vozidel se zárukou kvality a přímým jednáním.
+          </p>
+          <p class="reveal" data-delay="4">
+            Kazde vozidlo opravujeme tak, jako by bylo nase vlastni. Bez zbytecnych priplatku, bez prekvapeni na fakture. Najdete nas na adrese nize.
+          </p>
+        </div>
+        <div class="onas-highlights reveal" data-delay="2">
+          
+          <div class="highlight-item">
+            <span class="highlight-num">10+</span>
+            <div class="highlight-text">
+              <strong>Ověřených recenzí</strong>
+              <span>Hodnoceno zákazníky přímo na Google Maps</span>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-num">Třeboň</span>
+            <div class="highlight-text">
+              <strong>Třeboň, dostupné</strong>
+              <span>Servis v dosahu pro celé Třeboň a okolí</span>
+            </div>
+          </div>
+          <div class="highlight-item">
+            <span class="highlight-num">1×</span>
+            <div class="highlight-text">
+              <strong>Jeden hovor stačí</strong>
+              <span>Termín, cena a oprava — vše vyřídíte telefonicky</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="kontakt">
+    <div class="container">
+      <p class="section-label reveal" data-delay="1">Kde nas najdete</p>
+      <h2 class="section-title reveal" data-delay="2">Kontakt</h2>
+      <div class="kontakt-layout">
+        <div class="kontakt-info">
+          
+
+          <div class="kontakt-row reveal" data-delay="2">
+            <div class="kontakt-icon-wrap">📍</div>
+            <div>
+              <p class="kontakt-row-label">Adresa</p>
+              <p class="kontakt-row-value">Žižkova 90, 378 06 Suchdol nad Lužnicí</p>
+            </div>
+          </div>
+
+          <div class="kontakt-row reveal" data-delay="3">
+            <div class="kontakt-icon-wrap">🗺️</div>
+            <div>
+              <p class="kontakt-row-label">Navigace</p>
+              <p class="kontakt-row-value"><a href="https://maps.google.com/?q=%C5%BDi%C5%BEkova%2090%2C%20378%2006%20Suchdol%20nad%20Lu%C5%BEnic%C3%AD" target="_blank" rel="noopener">Otevrit v Google Maps</a></p>
+            </div>
+          </div>
+
+          <div class="reveal" data-delay="4" style="margin-top: 8px;">
+            <a href="https://maps.google.com/?q=%C5%BDi%C5%BEkova%2090%2C%20378%2006%20Suchdol%20nad%20Lu%C5%BEnic%C3%AD" class="btn-primary">Zobrazit na mape</a>
+          </div>
+        </div>
+
+        <div class="kontakt-map reveal" data-delay="3">
+          <iframe
+            src="https://maps.google.com/maps?q=%C5%BDi%C5%BEkova%2090%2C%20378%2006%20Suchdol%20nad%20Lu%C5%BEnic%C3%AD&output=embed"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Pavel Hamerník (autoservis) — mapa"
+          ></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-inner">
+        <span class="footer-brand">PAVEL<span>HAMERNÍK</span> Autoservis</span>
+        <span class="footer-copy">&copy; 2025 Pavel Hamerník (autoservis) &middot; Třeboň</span>
+      </div>
+    </div>
+  </footer>
+
+  
+
+  <script>
+    var navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', function() {
+      navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    var revealEls = document.querySelectorAll('.reveal');
+    var observer = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    revealEls.forEach(function(el) { observer.observe(el); });
+  </script>
+
+</body>
+</html>
